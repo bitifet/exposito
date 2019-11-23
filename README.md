@@ -12,3 +12,8 @@ Setup Process
     express --pug
     npm install
 
+
+### Webpack installation
+
+    npm install --save-dev webpack webpack-cli
+
