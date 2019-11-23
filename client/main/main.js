@@ -2,4 +2,13 @@
 // ===================
 "use strict";
 
-alert("Hello Webpack");
+import './styles.scss';
+import $ from 'jquery';
+import tpl from './main.pug';
+
+const html = tpl({
+    title: "Webpack Playground",
+});
+const body = $("body");
+
+body.html(html);

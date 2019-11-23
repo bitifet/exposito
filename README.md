@@ -48,3 +48,8 @@ Setup Process
 
     npm install --save-dev file-loader;
 
+
+### Misc libraries
+
+    npm install --save-dev jquery
+
