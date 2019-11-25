@@ -1,13 +1,9 @@
-extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
-  .main
-    h2 Hello Wonderful Pug!!
-    //- Local file (packed)
-    //img(src=require("./foo.png"))
-    //- Remote requested file
-    //img(src="/bar.png")
+.main
+  h2 Hello Wonderful Pug!!
+  //- Local file (packed)
+  img(src=require("./logo.png"))
+  //- Remote requested file
+  //img(src="/bar.png")
 
 //- vim: set ft=jade:

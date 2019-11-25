@@ -4,6 +4,18 @@ ExpressPack
 Webpack powered Express project boilerplate
 
 
+Technology
+----------
+
+  * Webpack
+  * Express
+  * Pug
+  * HTML5
+    - History API (TODO)
+  * SaSS
+  * GraphQL (TODO)
+
+
 Setup Process
 -------------
 
