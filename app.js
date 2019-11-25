@@ -1,27 +1,37 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
+
+const basePath = path.dirname(path.dirname(process.argv[1]))+"/";
+const viewsPath = path.resolve(basePath+'../client/main');
+const clientPath = path.resolve('dist/client');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'client/main'));
+app.set('views', viewsPath);
   // Old views directory moved to client/main
   // There will be the only views directly served by express
   // In order to allow error pages to be rendered.
   // Rest of the application will be generated from Webpack
   // and statically served.
+  //
+  // TODO: Get rid of Express template handling.
+  //       Instead: manually require and use needed templates
+  //       in error handling routes to AVOID accessing sources
+  //       at runtime.
+  //
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, clientPath)));
 
 app.use('/', indexRouter);
 

@@ -5,8 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
+  target: "web",
   entry: {
-    main: './client/main/main.js',
+    main: "./client/main/main.js",
   },
   mode: "development",
   plugins: [
@@ -14,29 +15,29 @@ module.exports = {
     new HtmlWebpackPlugin(),
   ],
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist/client"),
   },
   module: {
     rules: [
       {
         test: /\.s?css$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
+          "style-loader",
+          "css-loader",
+          "sass-loader",
         ],
       },
       {
         test: /\.pug$/,
         use: [
-          'pug-loader',
+          "pug-loader",
         ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
-          'file-loader',
+          "file-loader",
         ],
       },
     ],
