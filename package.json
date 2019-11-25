@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build-client": "webpack --config webpack.client.js --mode production",
-    "watch-client": "webpack --config webpack.client.js -w",
-    "build-server": "webpack --config webpack.server.js --mode production",
-    "watch-server": "webpack --config webpack.server.js -w",
+    "build": "webpack --mode production",
+    "watch": "webpack -w",
     "start": "node ./dist/server/main.bundle.js"
   },
   "dependencies": {
