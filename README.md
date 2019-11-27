@@ -27,20 +27,23 @@ Setup
 
 1. Clone and rename the repo:
 
-
+```sh
     git clone --depth=1 --branch=master https://github.com/bitifet/pasar.git myCoolProject
     rm -rf ./myCoolProject/.git
+```
 
 2. Install dependencies
 
-
+```sh
     cd myCoolProject
     npm install
+```
 
 3. Start playing...
 
-
+```sh
     npm start
+```
 
 And open ``http://localhost:3000`` in your preferred browser.
 
@@ -50,21 +53,27 @@ Making Off
 
 ### Express Setup
 
+```sh
     express --pug
     npm install
+```
 
 
 ### Webpack installation
 
+```sh
     npm install --save-dev webpack webpack-cli
+```
 
 
 ### Plugins installation
 
+```sh
     npm install --save-dev \
         html-webpack-plugin \
         clean-webpack-plugin \
     ;
+```
 
 
 ### Loaders (and dependencies) installation
@@ -72,34 +81,44 @@ Making Off
 
 #### To render (s)css
 
+```sh
     npm install --save-dev \
         style-loader \
         css-loader \
         sass-loader \
         node-sass \
     ;
+```
 
 
 #### To compile PUG templates
 
+```sh
     npm install --save-dev pug-loader;
+```
 
 
 #### To require raw assets
 
+```sh
     npm install --save-dev file-loader;
+```
 
 
 #### To pack server too
 
+```sh
     npm install --save-dev webpack-node-externals;
+```
 
   * This will avoid to pack node_modules.
 
 
 ### Misc libraries
 
+```sh
     npm install --save-dev jquery
+```
 
 
 NOTES
@@ -131,8 +150,10 @@ You can obtain bundle file path with ``process.argv[1]``.
 
 **Example:**
 
+```javascript
     const path = require("path");
     const basePath = path.dirname(process.argv[1]));
+```
 
 
 TODO
@@ -170,4 +191,4 @@ ways:
   * Whatever you like...
 
 Please, contact-me, open issues or send pull-requests thought [this project GIT
-repository](https://github.com/bitifet/exposito)
+gepository](https://github.com/bitifet/exposito)
