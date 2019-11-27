@@ -14,7 +14,7 @@ const serverConfig = {//{{{
     new CleanWebpackPlugin(),
   ],
   output: {
-    filename: "[name].bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist/server"),
   },
   module: {
@@ -27,7 +27,7 @@ const serverConfig = {//{{{
 const clientConfig = {//{{{
   target: "web",
   entry: {
-    main: "./client/main/main.js",
+    index: "./client/main/main.js",
   },
   mode: "development",
   plugins: [
@@ -35,7 +35,7 @@ const clientConfig = {//{{{
     new HtmlWebpackPlugin(),
   ],
   output: {
-    filename: "[name].bundle.js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist/client"),
   },
   module: {
@@ -62,6 +62,20 @@ const clientConfig = {//{{{
       },
     ],
   },
+  optimization: {
+    moduleIds: 'hashed',
+    runtimeChunk: 'single',
+    splitChunks: {
+     cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+
 };//}}}
 
 module.exports = [serverConfig, clientConfig];

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "watch": "webpack -w",
-    "start": "node ./dist/server/main.bundle.js"
+    "start": "node ./dist/server/main.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
