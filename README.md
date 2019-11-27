@@ -1,7 +1,7 @@
 
-░█▀▀░█░█░█▀█░█▀█░█▀▀░▀█▀░▀█▀░█▀█
-░█▀▀░▄▀▄░█▀▀░█░█░▀▀█░░█░░░█░░█░█
-░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀
+    ░█▀▀░█░█░█▀█░█▀█░█▀▀░▀█▀░▀█▀░█▀█
+    ░█▀▀░▄▀▄░█▀▀░█░█░▀▀█░░█░░░█░░█░█
+    ░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀
 
 EXPress Own Setup I Take Over
 -----------------------------
@@ -27,19 +27,22 @@ Setup
 
 1. Clone and rename the repo:
 
+
     git clone --depth=1 --branch=master https://github.com/bitifet/pasar.git myCoolProject
     rm -rf ./myCoolProject/.git
 
 2. Install dependencies
+
 
     cd myCoolProject
     npm install
 
 3. Start playing...
 
+
     npm start
 
-And open http://localhost:3000 in your preferred browser.
+And open ``http://localhost:3000`` in your preferred browser.
 
 
 Making Off
