@@ -1,7 +1,12 @@
-ExpressPack
-===========
 
-Webpack powered Express project boilerplate
+░█▀▀░█░█░█▀█░█▀█░█▀▀░▀█▀░▀█▀░█▀█
+░█▀▀░▄▀▄░█▀▀░█░█░▀▀█░░█░░░█░░█░█
+░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀
+
+EXPress Own Setup I Take Over
+-----------------------------
+
+Webpack powered Express project boilerplate.
 
 
 Technology
@@ -13,11 +18,32 @@ Technology
   * HTML5
     - History API (TODO)
   * SaSS
+  * Babel (TODO)
   * GraphQL (TODO)
 
 
-Setup Process
--------------
+Setup
+-----
+
+1. Clone and rename the repo:
+
+    git clone --depth=1 --branch=master https://github.com/bitifet/pasar.git myCoolProject
+    rm -rf ./myCoolProject/.git
+
+2. Install dependencies
+
+    cd myCoolProject
+    npm install
+
+3. Start playing...
+
+    npm start
+
+And open http://localhost:3000 in your preferred browser.
+
+
+Making Off
+----------
 
 ### Express Setup
 
@@ -106,9 +132,39 @@ You can obtain bundle file path with ``process.argv[1]``.
     const basePath = path.dirname(process.argv[1]));
 
 
+TODO
+----
+
+  * Implement access contrrol boilerplate.
+    - Consider special user access levels 'admin' and 'developer'.
+
+  * Block access to .map files in access control middleware to non
+    developer-level users.
+
+
 Bibliograpy
 -----------
 
   * https://medium.com/code-oil/webpack-javascript-bundling-for-both-front-end-and-back-end-b95f1b429810
 
   * https://dev.to/riversun/how-to-run-webpack-dev-server-on-express-5ei9
+
+
+Contributing
+------------
+
+If you are interested in contributing with this project, you can do it in many
+ways:
+
+  * Creating and/or mantainig documentation.
+
+  * Implementing new features or improving code implementation.
+
+  * Reporting bugs and/or fixing it.
+
+  * Sending me any other feedback.
+
+  * Whatever you like...
+
+Please, contact-me, open issues or send pull-requests thought [this project GIT
+repository](https://github.com/bitifet/exposito)
