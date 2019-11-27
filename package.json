@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack",
     "watch": "webpack -w",
     "start": "node ./dist/server/main.js"
   },

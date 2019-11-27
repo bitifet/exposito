@@ -4,12 +4,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const mode =  (
+    process.env.NODE_ENV == "production" ? "production"
+    : "development"
+);
+
 const serverConfig = {//{{{
   target: "node",
   entry: {
     main: "./bin/www",
   },
-  mode: "development",
+  mode,
   plugins: [
     new CleanWebpackPlugin(),
   ],
@@ -29,7 +34,7 @@ const clientConfig = {//{{{
   entry: {
     index: "./client/main/main.js",
   },
-  mode: "development",
+  mode,
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(),
