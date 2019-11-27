@@ -8,6 +8,10 @@ const mode =  (
     process.env.NODE_ENV == "production" ? "production"
     : "development"
 );
+const devtool = (
+    mode == "production" ? "source-map"
+    : "inline-source-map"
+);
 
 const serverConfig = {//{{{
   target: "node",
@@ -31,6 +35,7 @@ const serverConfig = {//{{{
 
 const clientConfig = {//{{{
   target: "web",
+  devtool,
   entry: {
     index: "./client/main/main.js",
   },
