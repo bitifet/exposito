@@ -114,6 +114,13 @@ Making Off
   * This will avoid to pack node_modules.
 
 
+#### Other loaders
+
+```sh
+    npm install --save-dev null-loader;
+```
+
+
 ### Misc libraries
 
 ```sh

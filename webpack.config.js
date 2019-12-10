@@ -13,12 +13,23 @@ const devtool = (
     : "inline-source-map"
 );
 
+const resolve = {
+    mainFiles: ['index', 'index.view'],
+    alias: {
+        '@models': path.resolve(__dirname, 'models'),
+        '@client': path.resolve(__dirname, 'client'),
+        '@views': path.resolve(__dirname, 'client/views'),
+        '@lib': path.resolve(__dirname, 'lib'),
+    },
+};
+
 const serverConfig = {//{{{
   target: "node",
   entry: {
     main: "./bin/www",
   },
   mode,
+  resolve,
   plugins: [
     new CleanWebpackPlugin(),
   ],
@@ -28,6 +39,12 @@ const serverConfig = {//{{{
   },
   module: {
     rules: [
+      {
+        test: /\.view\.js$/,
+        use: [
+          "null-loader",
+        ],
+      },
     ],
   },
   externals: [nodeExternals()],
@@ -40,6 +57,7 @@ const clientConfig = {//{{{
     index: "./client/main/main.js",
   },
   mode,
+  resolve,
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(),
@@ -47,6 +65,7 @@ const clientConfig = {//{{{
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist/client"),
+    publicPath: "/",
   },
   module: {
     rules: [
