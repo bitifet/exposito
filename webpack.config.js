@@ -4,6 +4,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// TODO:
+// =====
+//   * Autoprefixer
+//   * Babel
+
 const mode =  (
     process.env.NODE_ENV == "production" ? "production"
     : "development"
