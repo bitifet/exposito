@@ -22,7 +22,8 @@ const resolve = {
     alias: {
         '@models': path.resolve(__dirname, 'models'),
         '@client': path.resolve(__dirname, 'client'),
-        '@views': path.resolve(__dirname, 'client/views'),
+        '@assets': path.resolve(__dirname, 'client/Assets'),
+        '@views': path.resolve(__dirname, 'client/Views'),
         '@lib': path.resolve(__dirname, 'lib'),
     },
 };

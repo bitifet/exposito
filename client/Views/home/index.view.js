@@ -1,7 +1,7 @@
 // client/views/home/index.view.js
 // ===============================
 
-import view_base from '@client/interfaces/view.interface.js';
+import view_base from '@client/Interfaces/view.interface.js';
 import mainTpl from './home.pug';
 import {getJson} from '@lib/net';
 
