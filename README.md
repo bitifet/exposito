@@ -114,6 +114,17 @@ Making Off
   * This will avoid to pack node_modules.
 
 
+#### To Babel transpile
+
+```sh
+npm install --save-dev \
+    @babel/core \
+    babel-loader \
+    @babel/preset-env \
+    @babel/polyfill \
+;
+```
+
 #### Other loaders
 
 ```sh

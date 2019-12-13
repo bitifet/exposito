@@ -4,6 +4,16 @@ const Fs = require('fs');
 const Path = require('path');
 const basePath = Path.dirname(Path.dirname(process.argv[1]))+"/";
 
+(function fromEntries_shim(fromEntries){
+    // Just in case you need to execute in Node prior to 12.4.0
+    // Otherwise:
+    //   - This block can be removed
+    //   - And 'npm remove --save object.fromentries' executed.
+    if (!Object.fromEntries) {
+        fromEntries.shim();
+    };
+})(require('object.fromentries'));
+
 function simple_serialize(target) {//{{{
     if (typeof target != "object") return target; // Scalars.
     if (target instanceof Array) return target.map(simple_serialize);

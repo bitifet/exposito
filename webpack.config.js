@@ -7,7 +7,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // TODO:
 // =====
 //   * Autoprefixer
-//   * Babel
 
 const mode =  (
     process.env.NODE_ENV == "production" ? "production"
@@ -59,7 +58,10 @@ const clientConfig = {//{{{
   target: "web",
   devtool,
   entry: {
-    index: "./client/main/main.js",
+    index: [
+      "@babel/polyfill",
+      "./client/main/main.js",
+    ],
   },
   mode,
   resolve,
@@ -74,6 +76,11 @@ const clientConfig = {//{{{
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: { loader: 'babel-loader' }
+      },
       {
         test: /\.s?css$/,
         use: [
