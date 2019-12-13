@@ -1,14 +1,14 @@
 // client/Views/home/index.view.js
 // ===============================
 
-import view_base from '@client/Interfaces/view.interface.js';
-import mainTpl from './home.pug';
-import {cachedGetJson} from '@lib/net';
+module.exports = Promise.resolve().then(async function() {
 
-export default Promise.resolve().then(async function() {
+    const view_base = require('@client/Interfaces/view.interface.js');
+    const mainTpl = require('./home.pug');
+    const {cachedGetJson} = require('@lib/net');
 
     const model = (await cachedGetJson('/models.json')).views_home;
-    ///console.log(model);
+    ///console.log({model});
 
     class homeView extends view_base {
         render(target) {

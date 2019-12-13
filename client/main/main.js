@@ -14,8 +14,7 @@ export default new Promise(async function(resolve, reject) {
 
     const router = await (
         await require('@client/router')
-    ).default;
-
+    );
 
     router.go(path, args, hash);
 

@@ -27,20 +27,24 @@ function simple_serialize(target) {//{{{
 };//}}}
 
 
-const allowedPaths = require('@client/routes.js')
-    .map(r=>r[0])
-;
-const match = (txt, p)=>(
-    typeof p == "string" ? txt==p
-    : txt.match(p)
-)
 
-Router.use(function(req, res, next) {
-    if (allowedPaths.find(
-        expr=>match(req.path, expr)
-    ) === undefined) return next();
-    res.setHeader("content-type", "text/html");
-    Fs.createReadStream(basePath+"client/index.html").pipe(res);
+require('@client/routes.js').then(function(clientRoutes) {
+
+    allowedPaths = clientRoutes.map(r=>r[0]);
+
+    const match = (txt, p)=>(
+        typeof p == "string" ? txt==p
+        : txt.match(p)
+    )
+
+    Router.use(function(req, res, next) {
+        if (allowedPaths.find(
+            expr=>match(req.path, expr)
+        ) === undefined) return next();
+        res.setHeader("content-type", "text/html");
+        Fs.createReadStream(basePath+"client/index.html").pipe(res);
+    });
+
 });
 
     // Autoload of models:{{{

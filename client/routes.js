@@ -1,11 +1,14 @@
 // client/routes.js
 // ================
-"use strict";
-const routes = [];
 
-module.exports = [
-    ['/', require ( "@views/home"), {}],
-    ['/users', require ( "@views/blank"), {}],
-    [/^\/user\/(\w+)$/, require ( "@views/blank"), {}],
-];
+module.exports = Promise.resolve().then(async function(){
 
+    const routes =  [];
+
+    routes.push (['/', await require ("@views/home"), {}]);
+    routes.push (['/users', await require ("@views/blank"), {}]);
+    routes.push ([/^\/user\/(\w+)$/, await require ("@views/blank"), {}]);
+
+    return routes;
+
+});
