@@ -1,21 +1,25 @@
 // client/views/home/index.view.js
 // ===============================
 
-const view_base = require ( '@client/interfaces/view.interface.js');
-const mainTpl = require ( './home.pug');
-const model = require ( '@models/views/home.js');
+import view_base from '@client/interfaces/view.interface.js';
+import mainTpl from './home.pug';
+import {getJson} from '@lib/net';
 
-class homeView extends view_base {
-    render(target) {
-        target.html(
-            mainTpl(model)
-        )
+export default Promise.resolve().then(async function() {
+
+    const model = (await getJson('/models.json')).views_home;
+
+    class homeView extends view_base {
+        render(target) {
+            target.html(
+                mainTpl(model)
+            )
+        };
+        // onEnter(args={}) {
+        //     console.log({args});
+        //     return super.onEnter(args);
+        // };
     };
-    // onEnter(args={}) {
-    //     console.log({args});
-    //     return super.onEnter(args);
-    // };
-};
-
-module.exports = homeView;
+    return homeView;
+});
 

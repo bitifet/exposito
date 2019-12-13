@@ -9,4 +9,3 @@ module.exports = [
     [/^\/user\/(\w+)$/, require ( "@views/blank"), {}],
 ];
 
-

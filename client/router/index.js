@@ -4,54 +4,65 @@ import $ from 'jquery';
 import {app} from '@client/main/layout';
 import routes from '@client/routes';
 
-const viewClass = "view";
+export default Promise.resolve().then(async function(){
 
-const views = {
-    plain: new Map(), // Can ve directly accessed.
-    regex: [], // Must be checked one by one.
-};
-let currentView = null;
+    const viewClass = "view";
 
-function newTarget() {//{{{
-    return $("<div></div>")
-        .addClass(viewClass)
-        .appendTo(app)
-    ;
-};//}}}
-function loadRoute(path, viewController, options = {}) {//{{{
-    const view = new viewController(
-        newTarget()
-        , options
-    );
-    if (! currentView) currentView = view;
-    if (typeof path == "string") {
-        views.plain.set(path, view);
-    } else {
-        views.regex.push({path, view});
+    const views = {
+        plain: new Map(), // Can ve directly accessed.
+        regex: [], // Must be checked one by one.
     };
-};//}}}
-function getView(path) {//{{{
-    return (
-        views.plain.get(path)
-        || (views.regex.find(v=>path.match(v.path)) || {}).view
+    let currentView = null;
+
+    function newTarget() {//{{{
+        return $("<div></div>")
+            .addClass(viewClass)
+            .appendTo(app)
+        ;
+    };//}}}
+    async function loadRoute(path, viewController, options = {}) {//{{{
+        viewController = viewController.default || viewController();
+        viewController = await Promise.resolve(viewController);
+        const view = new viewController(
+            newTarget()
+            , options
+        );
+        if (typeof path == "string") {
+            views.plain.set(path, view);
+        } else {
+            views.regex.push({path, view});
+        };
+    };//}}}
+    function getView(path) {//{{{
+        return (
+            views.plain.get(path)
+            || (views.regex.find(v=>path.match(v.path)) || {}).view
+        );
+    };//}}}
+
+
+    await Promise.all(
+        routes.map(r=>loadRoute(...r))
     );
-};//}}}
 
 
-routes.forEach(r=>loadRoute(...r));
-currentView && currentView.onEnter();
+    currentView && currentView.onEnter();
 
 
-export function go(path, args, hash) {
-    console.log({
-        path,
-        args,
-        hash,
-        view: getView(path),
-    });
-    currentView && currentView.onExit();
-    currentView = getView(path);
-    currentView.onEnter(args, hash);
-};
+    function go(path, args, hash) {
+        // console.log("Going to", {
+        //     path,
+        //     args,
+        //     hash,
+        //     view: getView(path),
+        // });
+        currentView && currentView.onExit();
+        currentView = getView(path);
+        currentView.onEnter(args, hash);
+    };
 
-export default null;
+    return {
+        go,
+    };
+
+});
