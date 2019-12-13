@@ -18,7 +18,7 @@ Technology
   * HTML5
     - History API (TODO)
   * SaSS
-  * Babel (TODO)
+  * Babel
   * GraphQL (TODO)
 
 

@@ -1,4 +1,4 @@
-// client/views/blank/index.view.js
+// client/Views/blank/index.view.js
 // ================================
 
 import view_base from '@client/Interfaces/view.interface.js';

@@ -1,4 +1,4 @@
-// client/interfaces/view.interface.js
+// client/Interfaces/view.interface.js
 // ===================================
 
 const requiredMethods = [
