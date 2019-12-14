@@ -21,9 +21,10 @@ const resolve = {
     mainFiles: ['index', 'index.view'],
     alias: {
         '@models': path.resolve(__dirname, 'models'),
-        '@client': path.resolve(__dirname, 'client'),
-        '@assets': path.resolve(__dirname, 'client/Assets'),
-        '@views': path.resolve(__dirname, 'client/Views'),
+        '@client': path.resolve(__dirname, 'Client'),
+        '@server': path.resolve(__dirname, 'Server'),
+        '@assets': path.resolve(__dirname, 'Client/Assets'),
+        '@views': path.resolve(__dirname, 'Client/Views'),
         '@lib': path.resolve(__dirname, 'lib'),
     },
 };
@@ -31,7 +32,7 @@ const resolve = {
 const serverConfig = {//{{{
   target: "node",
   entry: {
-    main: "./bin/www",
+    main: "./Server/main",
   },
   mode,
   resolve,
@@ -40,7 +41,7 @@ const serverConfig = {//{{{
   ],
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "dist/server"),
+    path: path.resolve(__dirname, "dist/Server"),
   },
   module: {
     rules: [
@@ -61,7 +62,7 @@ const clientConfig = {//{{{
   entry: {
     index: [
       "@babel/polyfill",
-      "./client/main/main.js",
+      "./Client/main",
     ],
   },
   mode,
@@ -72,7 +73,7 @@ const clientConfig = {//{{{
   ],
   output: {
     filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist/client"),
+    path: path.resolve(__dirname, "dist/Client"),
     publicPath: "/",
   },
   module: {

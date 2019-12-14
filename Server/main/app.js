@@ -4,13 +4,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
+const indexRouter = require('@server/routes/index');
 
 const app = express();
 
-const basePath = path.dirname(path.dirname(process.argv[1]))+"/";
-const viewsPath = path.resolve(basePath+'../client/main');
-const clientPath = path.resolve('dist/client');
+const basePath = path.dirname(
+    path.dirname(process.argv[1]) // Server/main
+)+"/";
+console.log(basePath);
+const viewsPath = path.resolve(basePath+'../Client/main');
+const clientPath = path.resolve('dist/Client');
 
 // view engine setup
 app.set('views', viewsPath);

@@ -1,14 +1,12 @@
-// client/main/main.js
+// Client/main/main.js
 // ===================
 
-import './styles.scss';
 import {app} from './layout';
 import {parseUrlSearch} from '@lib/url.js';
 
 const path = window.location.pathname;
 const args = parseUrlSearch(window.location.search);
 const hash = window.location.hash;
-
 
 export default new Promise(async function(resolve, reject) {
 
@@ -19,5 +17,4 @@ export default new Promise(async function(resolve, reject) {
     router.go(path, args, hash);
 
 });
-
 
