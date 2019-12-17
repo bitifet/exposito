@@ -183,6 +183,20 @@ TODO
   * Block access to .map files in access control middleware to non
     developer-level users.
 
+  * Make modules dynamic:
+
+    - Allow to include configuration data (that must be read at execution
+      -not building- time).
+
+    - Consider allowing dynamic reload too.
+      + For example detecting if a module returns a function and executing
+        it each time.
+
+    - Consider making them async in order to allow:
+      + Database queries.
+      + External APIs request.
+	  + ...or even configuration file change watching.
+
 
 Bibliograpy
 -----------
