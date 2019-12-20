@@ -1,8 +1,22 @@
+// webpack.config.js
+// =================
 "use strict";
+const fs = require('fs');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const shims = (function(shimPath) {//{{{
+    try {
+        return fs.readdirSync(shimPath)
+            .filter(f=>f.match(/\.js$/))
+            .map(f=>shimPath+'/'+f)
+        ;
+    } catch (err) {
+        return [];
+    };
+})('./Shims');//}}}
 
 // TODO:
 // =====
@@ -32,7 +46,10 @@ const resolve = {
 const serverConfig = {//{{{
   target: "node",
   entry: {
-    main: "./Server/main",
+    main: [
+      ...shims,
+      "./Server/main",
+    ],
   },
   mode,
   resolve,
@@ -61,6 +78,7 @@ const clientConfig = {//{{{
   devtool,
   entry: {
     index: [
+      ...shims,
       "@babel/polyfill",
       "./Client/main",
     ],
