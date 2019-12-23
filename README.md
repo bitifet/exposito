@@ -39,7 +39,27 @@ Setup
     npm install
 ```
 
-3. Start playing...
+3. Customize your project
+
+Check:
+
+  * `package.json` (update 'name' property)
+  * `models/app.js` (update 'longName' and 'brand' properties)
+
+
+4. Create a configuration file
+
+```sh
+sudo mkdir -p /etc/<brand>/<name>
+node Server/etc/config.js | sudo tee /etc/<brand>/<name>/<name>.yaml
+```
+
+> **FIXME:** Not yet working because of Webpack aliased paths...
+
+...where ``<brand>`` and ``<name>`` are those you've chosen in previous step.
+
+
+5. Start playing...
 
 ```sh
     npm start
