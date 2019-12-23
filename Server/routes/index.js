@@ -23,7 +23,7 @@ require('@client/routes.js').then(function(clientRoutes) {
             expr=>match(req.path, expr)
         ) === undefined) return next();
         res.setHeader("content-type", "text/html");
-        Fs.createReadStream(basePath+"client/index.html").pipe(res);
+        Fs.createReadStream(basePath+"Client/index.html").pipe(res);
     });
 
 });

@@ -13,7 +13,6 @@ const app = express();
 const basePath = path.dirname(
     path.dirname(process.argv[1]) // Server/main
 )+"/";
-console.log(basePath);
 const viewsPath = path.resolve(basePath+'../Client/main');
 const clientPath = path.resolve('dist/Client');
 
