@@ -63,7 +63,12 @@ npm start config-file-template | sudo tee /etc/<brand>/<name>/<name>.yaml
     npm start
 ```
 
-And open ``http://localhost:3000`` in your preferred browser.
+And open ``http://localhost:1080`` in your preferred browser.
+
+> **Note:** This is the default port. Check/Modify in www configuration
+> section.
+>
+> You can also modify your project default en `models/www.js`.
 
 
 Making Off

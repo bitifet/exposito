@@ -3,30 +3,78 @@
  * Module dependencies.
  */
 
-var app = require('./app');
-var debug = require('debug')('expresspack:server');
+const {name} = require('@models/app');
+const model = require('@models/www');
+const app = require('./app');
+
+///const debug = require('debug')(`${name}:server`);
+
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Get ports from config and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+app.set('ports', model.protocols);
+
 
 /**
- * Create HTTP server.
+ * Create HTTP(s/2) server(s).
  */
 
-var server = http.createServer(app);
+const servers = Object.keys(model.protocols).map(function(protocol){
+    if (protocol.match(/^h(?:ttp\/?)2$/)) { // Accept http2, http/2 and h2 or actual spdy.
+        protocol = "spdy";
+    };
+    try {
+        var port = normalizePort(model.protocols[protocol]);
+        switch (protocol) {
+            case 'h2':
+            case 'http2':
+                var engine = require('spdy');
+                break;
+            case 'https':
+                var engine = require('https');
+                break;
+            case 'http':
+                var engine = require('http');
+                break;
+        };
+        var args = [app];
+        if (protocol != 'http') {
+            args.unshift({
+                key: model.files.privateKey,
+                cert: model.files.certificate,
+            });
+        };
+
+        var server = engine.createServer.apply(engine, args);
+        server.port = port;
+
+        return {
+            address: model.address,
+            port,
+            protocol,
+            server,
+        }
+
+    } catch (err) {
+        console.error("Unsuported protocol: " + protocol);
+        process.exit(1);
+    };
+});
+
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+servers.map(srv=>{
+    srv.server.listen(srv.port, srv.address);
+    srv.server.on('error', x=>onError.call(srv));
+    srv.server.on('listening', x=>onListening.call(srv));
+});
+
 
 /**
  * Normalize a port into a number, string, or false.
@@ -81,11 +129,11 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  var addr = this.server.address();
+  console.log("Server listening at " + this.address + ":" + this.port + ". Protocol: " + this.protocol);
+  /// var bind = typeof addr === 'string'
+  ///  ? 'pipe ' + addr
+  ///  : 'port ' + addr.port;
+  /// debug('Listening on ' + bind);
 }
 
-//- vim: set ft=javascript:

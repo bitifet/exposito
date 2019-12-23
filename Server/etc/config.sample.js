@@ -13,9 +13,9 @@ module.exports = (
   www:
     address: "0.0.0.0"
     protocols:
-      # http: 4080
-      # https: 4443
-      h2: 4443
+      http: 1080
+      # https: 1443
+      # h2: 1443
   db:
     exposito:
       type: "postgresql"
