@@ -1,11 +1,11 @@
 // Server/main/index.js
 // ====================
 
-// Uncomment to test.
-// But this is ONLY intended to be used from models.
-// -------------------------------------------------
-// import cfg from '@server/etc';
-// console.log(cfg);
+const args = process.argv.slice(2);
 
-import "./www.js";
+if (args.find(arg=>arg=='config-file-template')) {
+    console.log(require('@server/etc/config.sample'));
+} else {
+    require ("./www.js");
+};
 

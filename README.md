@@ -47,14 +47,12 @@ Check:
   * `models/app.js` (update 'longName' and 'brand' properties)
 
 
-4. Create a configuration file
+4. create a configuration file
 
 ```sh
 sudo mkdir -p /etc/<brand>/<name>
-node Server/etc/config.js | sudo tee /etc/<brand>/<name>/<name>.yaml
+npm start config-file-template | sudo tee /etc/<brand>/<name>/<name>.yaml
 ```
-
-> **FIXME:** Not yet working because of Webpack aliased paths...
 
 ...where ``<brand>`` and ``<name>`` are those you've chosen in previous step.
 
