@@ -26,7 +26,9 @@ const requiredMethods = [
         me.render(me.target, me.options);
         me.onExit();
     };//}}}
-    onEnter(args, {hash} = {}) {this.target.show()};
+    onEnter(prm) {
+        this.target.show()
+    };
     onExit() {this.target.hide()};
 };
 

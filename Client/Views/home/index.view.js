@@ -16,9 +16,9 @@ module.exports = Promise.resolve().then(async function() {
                 mainTpl(model)
             )
         };
-        // onEnter(args={}) {
-        //     console.log({args});
-        //     return super.onEnter(args);
+        // onEnter(prm={}) {
+        //     console.log({prm});
+        //     return super.onEnter(prm);
         // };
     };
     return homeView;
