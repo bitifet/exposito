@@ -3,13 +3,16 @@
 
 module.exports = Promise.resolve().then(async function(){
 
-
     const Url = require('@lib/url.js');
     const $ = require('jquery');
 
     const viewClass = "view";
 
-    return async function routerBuilder(container, routes) {
+    return async function routerBuilder(
+        routes
+        , w = window
+        , container = $(w.document.body)
+    ) {
 
         const views = {
             plain: new Map(), // Can ve directly accessed.
@@ -46,7 +49,12 @@ module.exports = Promise.resolve().then(async function(){
             }).view;
             return {view, params};
         };//}}}
-        function updateView(path, search, hash) {//{{{
+        async function updateView(args) {//{{{
+            if (typeof args == "string") { // Url
+                args = Url.parse(args);
+                args.search = Url.parseSearchStr(search);
+            };
+            const {path, search, hash} = args;
             const {view, params} = resolvePath(path);
             const prm = {
                 path,
@@ -55,26 +63,51 @@ module.exports = Promise.resolve().then(async function(){
                 search,
                 hash,
             }
-            currentView && currentView.onExit();
+            currentView && await currentView.onExit();
             currentView = view;
-            currentView.onEnter(prm);
+            await currentView.onEnter(prm);
+            return prm;
         };//}}}
 
+        // Load all routes:
         await Promise.all(
             routes.map(r=>loadRoute(...r))
         );
 
-        function go(url) {
-            const {pathname, search, hash} = Url.parse(url);
-            updateView(
-                pathname
-                , Url.parseSearchStr(search)
-                , hash
-            );
+        // Handle browser's back and forward buttons
+        w.onpopstate = function(...args) {
+            updateView(w.location.href);
         };
+
+        // Implement main router API functions:
+        async function go(url) {//{{{
+            switch (typeof url) {
+                case "undefined":
+                case "number":
+                    return w.history.go(url);
+                default:
+                    const prm = await updateView(url);
+                    w.history.pushState(
+                        null,
+                        "",
+                        Url.format(
+                            prm.path
+                            , prm.search
+                            , prm.hash
+                        )
+                    );
+                    return prm;
+            };
+        };//}}}
+
+        // Navigate to initial url location:
+        go(w.location.toString());
 
         return {
             go,
+            back: w.history.back.bind(w.history),
+            forward: w.history.back.bind(w.history),
+            length: ()=>history.length,
         };
 
     };

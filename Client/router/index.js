@@ -6,9 +6,13 @@ module.exports = Promise.resolve().then(async function(){
     const {app} = require('@client/main/layout');
 
     const routes = await require('@client/routes');
+    const Router = await require('./router');
+    const mainRouter = await Router(
+        routes
+        , window
+        , app
+    );
 
-    const mainRouter = await require('./router');
-
-    return mainRouter(app, routes);
+    return mainRouter;
 
 });
