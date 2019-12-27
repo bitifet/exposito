@@ -1,4 +1,14 @@
-h1= title
-p Welcome to #{title}
-block content
-#app
+doctype html
+- const {appModel} = htmlWebpackPlugin.options;
+- const title = appModel.name.toUpperCase();
+html
+    head
+        block headings
+            meta(charset='utf-8')
+            title #{title} - #{appModel.longName}
+            meta(name="viewport", content="initial-scale=1")
+    body
+        h1= title
+        p Welcome to #{appModel.longName}
+        block content
+        #app
