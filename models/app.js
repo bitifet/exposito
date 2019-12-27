@@ -1,6 +1,7 @@
 // models/app.js
 // =============
 const Path = require("path");
+const Fs = require("fs");
 
 // ---------------------------------------------------
 const {name, version} = require("../package.json");
@@ -17,6 +18,17 @@ const cfgFile = Path.join(
 );
 const cfgPath = Path.dirname(cfgFile);
 
+const clientPath = Path.join(
+    Path.dirname(Path.dirname(process.argv[1]))
+    , 'Client'
+);
+
+const serviceWorkerPath = ( // FIXME: There should be a better way to get it.
+    module.webpackPolyfill ? '/' + Fs.readdirSync(clientPath)
+        .find(f=>f.match(/^serviceWorker\.[^.]+\.js$/))
+    : null
+);
+
 module.exports = {
     name,
     longName,
@@ -25,4 +37,5 @@ module.exports = {
     environment,
     cfgFile,
     cfgPath,
+    serviceWorkerPath,
 };

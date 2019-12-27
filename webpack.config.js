@@ -7,12 +7,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
+const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
 
 const appModel = require('./models/app.js');
 const htmlOptions = {
     title: appModel.name,
     template: 'Client/layout/layout.pug',
     appModel,
+    excludeAssets: [/^\/serviceWorker\..*\.js$/],
 };
 
 const shims = (function(shimPath) {//{{{
@@ -90,12 +92,18 @@ const clientConfig = {//{{{
       "@babel/polyfill",
       "./Client/main",
     ],
+    serviceWorker: [
+      ...shims,
+      "@babel/polyfill",
+      "./Client/pwa/serviceWorker",
+    ]
   },
   mode,
   resolve,
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(htmlOptions),
+    new HtmlWebpackExcludeAssetsPlugin(),
     new HtmlWebpackPugPlugin({
       adjustIndent: true,
       pretty: true,
