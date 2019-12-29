@@ -6,6 +6,14 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
+
+const appModel = require('./models/app.js');
+const htmlOptions = {
+    title: appModel.name,
+    template: 'Client/layout/layout.pug',
+    appModel,
+};
 
 const shims = (function(shimPath) {//{{{
     try {
@@ -87,7 +95,11 @@ const clientConfig = {//{{{
   resolve,
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin(htmlOptions),
+    new HtmlWebpackPugPlugin({
+      adjustIndent: true,
+      pretty: true,
+    }),
   ],
   output: {
     filename: "[name].[contenthash].js",
