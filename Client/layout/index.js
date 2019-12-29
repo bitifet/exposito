@@ -2,10 +2,8 @@
 // =====================
 import $ from 'jquery';
 
-// Setup layout:
-export const body = $("body");
-
-// App container:
-export const app = $("#app");
+export const body = $("body");  // Main body.
+export const app  = $("#app");  // App container.
+export const menu = $("#menu"); // Menú container.
 
 export default null;
