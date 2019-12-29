@@ -9,6 +9,7 @@ module.exports = Promise.resolve().then(async function(){
         container.html(
             menuTpl()
         );
+        return container;
     };
 
 });

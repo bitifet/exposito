@@ -68,18 +68,6 @@ module.exports = Promise.resolve().then(async function(){
             await currentView.onEnter(prm);
             return prm;
         };//}}}
-
-        // Load all routes:
-        await Promise.all(
-            routes.map(r=>loadRoute(...r))
-        );
-
-        // Handle browser's back and forward buttons
-        w.onpopstate = function(...args) {
-            updateView(w.location.href);
-        };
-
-        // Implement main router API functions:
         async function go(url) {//{{{
             switch (typeof url) {
                 case "undefined":
@@ -99,15 +87,37 @@ module.exports = Promise.resolve().then(async function(){
                     return prm;
             };
         };//}}}
+        function attach(target) {//{{{
+            target.on("click", "a[href]", function(ev) {
+                const url = $(this).attr("href");
+                if (Url.parse(url).host) return; // Respect external links
+                ev.preventDefault();
+                go(url);
+            });
+        };//}}}
+
+        // Load all routes:
+        await Promise.all(
+            routes.map(r=>loadRoute(...r))
+        );
+
+        // Handle browser's back and forward buttons
+        w.onpopstate = function(...args) {
+            updateView(w.location.href);
+        };
 
         // Navigate to initial url location:
         go(w.location.toString());
+
+        // Attach internal links to this router.
+        attach(container);
 
         return {
             go,
             back: w.history.back.bind(w.history),
             forward: w.history.back.bind(w.history),
             length: ()=>history.length,
+            attach,
         };
 
     };
