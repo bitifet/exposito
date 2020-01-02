@@ -7,7 +7,7 @@
   },
   "engineStrict": true,
   "scripts": {
-    "tree": "tree -d -I node_modules",
+    "tree": "tree -d -v -I node_modules",
     "build": "webpack",
     "watch": "webpack -w",
     "start": "node ./dist/Server/main.js"

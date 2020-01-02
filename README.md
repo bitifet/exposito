@@ -4,22 +4,37 @@
     ░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀
 
 EXPress Own Setup I Take Over
------------------------------
+=============================
 
 Webpack powered Express project boilerplate.
 
+Índex
+-----
 
-Technology
-----------
+<!-- vim-markdown-toc GitLab -->
 
-  * Webpack
-  * Express
-  * Pug
-  * HTML5
-    - History API (TODO)
-  * SaSS
-  * Babel
-  * GraphQL (TODO)
+* [Setup](#setup)
+* [Goals](#goals)
+    * [History API based routing](#history-api-based-routing)
+    * [Clever, plain and manageable project structure](#clever-plain-and-manageable-project-structure)
+    * [ES6+ enabled](#es6-enabled)
+    * [SPA](#spa)
+    * [SRP](#srp)
+    * [DRY](#dry)
+* [Technology](#technology)
+    * [Not yet incorporated](#not-yet-incorporated)
+* [TODO](#todo)
+* [Bibliograpy](#bibliograpy)
+* [Contributing](#contributing)
+
+<!-- vim-markdown-toc -->
+
+
+**Other documents:**
+
+|                              |                                |
+|------------------------------|--------------------------------|
+| [Making Of](Doc/MakingOf.md) | [Dev Manual](Doc/DevManual.md) |
 
 
 Setup
@@ -71,134 +86,134 @@ And open ``http://localhost:1080`` in your preferred browser.
 > You can also modify your project default en `models/www.js`.
 
 
-Making Off
-----------
-
-### Express Setup
-
-```sh
-    express --pug
-    npm install
-```
-
-
-### Webpack installation
-
-```sh
-    npm install --save-dev webpack webpack-cli
-```
-
-
-### Plugins installation
-
-```sh
-    npm install --save-dev \
-        html-webpack-plugin \
-        clean-webpack-plugin \
-    ;
-```
-
-
-### Loaders (and dependencies) installation
-
-
-#### To render (s)css
-
-```sh
-    npm install --save-dev \
-        style-loader \
-        css-loader \
-        sass-loader \
-        node-sass \
-    ;
-```
-
-
-#### To compile PUG templates
-
-```sh
-    npm install --save-dev pug-loader;
-```
-
-
-#### To require raw assets
-
-```sh
-    npm install --save-dev file-loader;
-```
-
-
-#### To pack server too
-
-```sh
-    npm install --save-dev webpack-node-externals;
-```
-
-  * This will avoid to pack node_modules.
-
-
-#### To Babel transpile
-
-```sh
-npm install --save-dev \
-    @babel/core \
-    babel-loader \
-    @babel/preset-env \
-    @babel/polyfill \
-;
-```
-
-#### Other loaders
-
-```sh
-    npm install --save-dev null-loader;
-```
-
-
-### Misc libraries
-
-```sh
-    npm install --save-dev jquery
-```
-
-
-NOTES
+Goals
 -----
 
-### Server Caveats
+### History API based routing
 
-#### Shebang not supported
+  * Internal links works without reloading.
 
-Unix* shebang is not supported so first row in 'bin/www'
-(``#!/usr/bin/env node`` must be removed).
+  * All routes are server side directly addressable.
 
+  * Non existing routes answer valid 404 http error from server (server knows
+    whether a client side route exists or may exists¹).
 
-#### Path issues
-
-When packing server:
-
-  * Don't trust ``__dirname`` and ``__filename``
-    - ``__dirname`` always resolves to "/".
-    - ...so ``__filename`` is also relative to "/".
-
-  * Keep in mind that relative paths will be based on the path from which the
-    bundle got called.
+> ¹) Regular expression based routes allows for things such as ``/user/john``.
+> In this case, server will know that the router is valid, but not if that user
+> actually exists.
 
 
-##### Workarround
+### Clever, plain and manageable project structure
 
-You can obtain bundle file path with ``process.argv[1]``.
 
-**Example:**
+    $ npm run tree
 
-```javascript
-    const path = require("path");
-    const basePath = path.dirname(process.argv[1]));
-```
+    > exposito@0.0.0 tree /home/joanmi/Nextcloud/prj/ui/exposito
+    > tree -d -v -I node_modules
+
+    .
+    ├── Client
+    │   ├── Assets
+    │   ├── Interfaces
+    │   ├── Views
+    │   │   ├── blank
+    │   │   └── home
+    │   ├── layout
+    │   ├── main
+    │   ├── menu
+    │   └── router
+    ├── Doc
+    ├── Server
+    │   ├── etc
+    │   ├── main
+    │   ├── models
+    │   └── routes
+    ├── Shims
+    ├── dist
+    │   ├── Client
+    │   └── Server
+    ├── lib
+    └── models
+        └── views
+
+
+  * ``npm start`` runs built project from dist.
+  * Dist contents will (but not yet --TODO--) include a production *package.json*
+    file allowing to distribute just the dist directory.
+
+
+### ES6+ enabled
+
+...both client and server side through Babel and polyfills.
+
+
+### SPA
+
+*SPA* stands for [Single Page
+Application](https://en.wikipedia.org/wiki/Single-page_application).
+
+
+### SRP
+
+*SRP* stands for [Single Responsibility
+Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle).
+
+
+### DRY
+
+*DRY* stands for [Don't Repeat
+Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
+
+Thanks to webpack's astonishing code reusability and acording to our [plain
+project structure](#clever-plain-and-manageable-project-structure):
+
+  * All client stuff is grouped under ``/Client`` directory.
+  * All server stuff is grouped under ``/Server`` directory.
+  * All general purpose helpers and functions under ``/lib``.
+  * All *data models* (predefined values) under /models
+  * All configuration **nowhere**: Configuration intended to be used only to
+    shape models.
+
+**BUT:**
+
+When some information or functionality from either side is needed from the
+other too, implied files (or whole modules if necessary) can be directly
+referenced and Webpack will natrually bundle them.
+
+This is the case of ``Client/routes.js`` which is included from server too in
+order to allow Express to propperly route them (even always to the same client
+side logic) from any valid entry point.
+
+This is why client's views entry points (in every ``Client/Views/`` subdirectory)
+is named ``index.view.js`` instead of simply ``index.js``: Because client-side
+webpack configuration allows for both while server-side one redirects any
+``*.view.js`` file to null loader so view controllers don't get bundled server
+side even required from ``Client/routes.js`` file.
+
+
+Technology
+----------
+
+  * Webpack
+  * Express
+  * Pug
+  * HTML5
+    - History API
+  * SaSS
+  * Babel
+
+### Not yet incorporated
+
+  * GraphQL
+  * [SQLTT](https://www.npmjs.com/package/sqltt)
+  * PWA
+
 
 
 TODO
 ----
+
+  * Implement PWA module.
 
   * Implement access contrrol boilerplate.
     - Consider special user access levels 'admin' and 'developer'.
@@ -206,7 +221,7 @@ TODO
   * Block access to .map files in access control middleware to non
     developer-level users.
 
-  * Make modules dynamic:
+  * Make models dynamic:
 
     - Allow to include configuration data (that must be read at execution
       -not building- time).
@@ -218,15 +233,19 @@ TODO
     - Consider making them async in order to allow:
       + Database queries.
       + External APIs request.
-	  + ...or even configuration file change watching.
+      + ...or even configuration file change watching.
 
 
 Bibliograpy
 -----------
 
-  * https://medium.com/code-oil/webpack-javascript-bundling-for-both-front-end-and-back-end-b95f1b429810
-
-  * https://dev.to/riversun/how-to-run-webpack-dev-server-on-express-5ei9
+  * Express:
+    - [Use single configuration file for both client and
+      server](https://medium.com/code-oil/webpack-javascript-bundling-for-both-front-end-and-back-end-b95f1b429810).
+    - [Build
+      automation](https://dev.to/riversun/how-to-run-webpack-dev-server-on-express-5ei9).
+    - [PWA
+      Integration](https://webpack.js.org/guides/progressive-web-application).
 
 
 Contributing
