@@ -1,5 +1,7 @@
 // client/main/layout.js
 // =====================
+import './layout.scss';
+import './styles.scss';
 import $ from 'jquery';
 
 export const body = $("body");  // Main body.

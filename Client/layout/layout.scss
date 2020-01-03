@@ -1,0 +1,71 @@
+:root {
+    font-size: calc(7px + 3vmin);
+    --menu-height: 2rem
+};
+
+.container {
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+
+body {// {{{
+    @extend .container;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: var(--menu-height) 1fr;
+
+
+    &>* {
+        outline: dashed red;
+    }
+
+}// }}}
+
+#header {// {{{
+    @extend .container;
+    display: flex;
+    padding: .5rem;
+    overflow: hidden;
+    justify-content: flex-around;
+    .spacer {
+        flex-grow: 1;
+    }
+
+
+    background: #ccffcc;
+
+    h1, h2 {
+        margin: 0px;
+        padding: 0px;
+        font-size: 1.2rem;
+        display: inline;
+    }
+    h2 {
+        &::before {
+            content: ' - ';
+            display: inline;
+        }
+        font-size: 1rem
+    }
+    
+
+    @media screen and (orientation:portrait) {
+    }
+    
+
+}// }}}
+
+#menu.disabled {// {{{
+    display: none;
+    // Lay it out as hidden placeholder.
+    // Is its own module responsibility to remove "disabled" class after proper
+    // internal layout and styling.
+}// }}}
+

@@ -3,6 +3,7 @@
 
 module.exports = Promise.resolve().then(async function(){
 
+    ///const EventEmitter = require('events').EventEmitter;
     const Url = require('@lib/url.js');
     const $ = require('jquery');
 
@@ -66,6 +67,7 @@ module.exports = Promise.resolve().then(async function(){
             currentView && await currentView.onExit();
             currentView = view;
             await currentView.onEnter(prm);
+            container.trigger("pageChange", prm);
             return prm;
         };//}}}
         async function go(url) {//{{{

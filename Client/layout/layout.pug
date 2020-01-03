@@ -1,15 +1,28 @@
 doctype html
 - const {appModel} = htmlWebpackPlugin.options;
 - const title = appModel.name.toUpperCase();
+//- This template is intended to be used both:
+//-   * Client side as application rendering entry point.
+//-   * Server side to be extended for error pages.
+//- Hence 'block' sections even not used in client side rendering.
 html
     head
         block headings
             meta(charset='utf-8')
             title #{title} - #{appModel.longName}
             meta(name="viewport", content="initial-scale=1")
+            //- Hide contents until CSS applied
+            style body{display:none;}
     body
-        h1= title
-        p Welcome to #{appModel.longName}
+        header#header
+            h1.appTitle(
+                title=appModel.longName
+            )= title
+            .spacer
+            #primaryButtons
+                span X
         block content
-        #menu
-        #app
+        .container
+            #menu.disabled
+            #app
+

@@ -12,6 +12,7 @@ export default new Promise(async function(resolve, reject) {
     const mainMenu = await menu(
         {}
         , layout.menu
+        , layout.app
     );
 
     // Main Router Service:
