@@ -1,6 +1,6 @@
 :root {
     font-size: calc(7px + 3vmin);
-    --menu-height: 2rem
+    --header-height: 2.5rem;
 };
 
 .container {
@@ -19,7 +19,7 @@ body {// {{{
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-rows: var(--menu-height) 1fr;
+    grid-template-rows: var(--header-height) 1fr;
 }// }}}
 
 #header {// {{{
@@ -30,14 +30,19 @@ body {// {{{
     .spacer {
         flex-grow: 1;
     }
+    &>* {
+        min-width: var(--header-height);
+    }
 
 
-    background: #ccffcc;
+    background: #444444;
+    color: white;
 
     h1, h2 {
         margin: 0px;
-        padding: .3rem;
-        font-size: 1.2rem;
+        padding: calc( var(--header-height) * 10 / 100);
+        font-size: calc( var(--header-height) * 70 / 100);
+        line-height: var(font-size);
         display: inline;
     }
     h2 {

@@ -4,12 +4,16 @@
 
     .mainButton {
         margin: 0px;
+        padding-top: 0px;
+        font-variant-position: super;
         display: block;
         width: 100%;
         height: 100%;
         background: black;
         color: white;
-        &:hover, &.set {
+        font-size: 2.8rem;
+        line-heigth: var(font-size);
+        &.set {
             background: white;
             color: black;
         }
