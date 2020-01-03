@@ -1,5 +1,8 @@
 
 .mainMenu {
+    &:not(.visible) {
+        display: none;
+    }
 
     background: lightgrey;
     position: absolute;
@@ -12,7 +15,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 
-    &>ul {
+    &>ul.menuList {
         list-style-type: none;
         margin: 0px;
         padding: 0px;
@@ -21,7 +24,7 @@
             line-height: 3rem;
             font-size: 1.5em;
             margin: .1em;
-            &>a {
+            &>a.menuOption {
                 &, &:hover, &:visited {
                     outline: none;
                     text-decoration: none;
@@ -33,7 +36,12 @@
                 &:hover, &:active {
                     background: lightgrey;
                 }
-            };
+                &.current {
+                    &, &:hover, &:visited {
+                        background: #cccccc; 
+                    }
+                }
+            }
         }
 
     }

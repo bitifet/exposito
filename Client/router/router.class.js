@@ -100,7 +100,7 @@ class Router extends EventEmitter {
         me.currentView && await me.currentView.onExit();
         me.currentView = view;
         await me.currentView.onEnter(prm);
-        me.container.trigger("pageChange", prm);
+        me.emit("pageChange", prm);
         return prm;
     };//}}}
     async go(url) {//{{{
