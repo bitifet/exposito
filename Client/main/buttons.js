@@ -7,7 +7,7 @@ import $ from 'jquery';
 primaryButtons.addClass("main_primaryButtons");
 require('./buttons.scss');
 
-export const menuButton = $("<button></button>")
+export const menuButton = $("<span></span>")
     .addClass("mainButton")
     .text("☰ ")
     .appendTo(primaryButtons)

@@ -5,6 +5,7 @@ module.exports = Promise.resolve().then(async function(){
 
     const $ = require('jquery');
     const menuTpl = require("./menu.pug");
+    const routerIntegration = require("./routerIntegration");
     require("./menu.scss");
     const fakeButton = ()=>$("<span></span>");
 
@@ -18,7 +19,6 @@ module.exports = Promise.resolve().then(async function(){
         if (buttons instanceof Array) { // Accept an array with multiple buttons.
             buttons = buttons.reduce($.merge)
         };
-        console.log({buttons});
 
         menuContainer.html(
             menuTpl()
@@ -40,31 +40,14 @@ module.exports = Promise.resolve().then(async function(){
             };
         };//}}}
 
-        function onPageChange(evt) {//{{{
-            const options = $(".menuOption", menuContainer);
-                // Not catched in order to allow dynamically adding options.
-            options.removeClass("current");
-
-            const selector = `[href="${evt.path}"]`;
-            const current = options.filter(selector);
-
-            updateStatus(false);
-            current.addClass("current");
-
-            // console.log("--- pageChange ---");
-            // console.log(evt.path);
-            // console.log({selector, current, options});
-            // console.log("--- ---------- ---");
-
-        };//}}}
-
         updateStatus(false);
         buttons.on("click", updateStatus);
 
         menuContainer.addClass("mainMenu");
         menuContainer.removeClass("disabled");
 
-        if (options.eventsTarget) options.eventsTarget.on("pageChange", onPageChange);
+        // Router integration:
+        if (options.router) routerIntegration(options.router, menuContainer, updateStatus);
 
         return menuContainer;
     };

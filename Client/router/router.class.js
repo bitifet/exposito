@@ -84,24 +84,26 @@ class Router extends EventEmitter {
     };//}}}
     async updateView(args) {//{{{
         const me = this;
-        if (typeof args == "string") { // Url
-            args = Url.parse(args);
-            args.search = Url.parseSearchStr(search);
+        if (args) {
+            if (typeof args == "string") { // Url
+                args = Url.parse(args);
+                args.search = Url.parseSearchStr(search);
+            };
+            const {path, search, hash} = args;
+            const {view, params} = me.resolvePath(path);
+            me.payload = {
+                path,
+                view,
+                params,
+                search,
+                hash,
+            }
+            me.currentView && await me.currentView.onExit();
+            me.currentView = view;
+            await me.currentView.onEnter(me.payload);
         };
-        const {path, search, hash} = args;
-        const {view, params} = me.resolvePath(path);
-        const prm = {
-            path,
-            view,
-            params,
-            search,
-            hash,
-        }
-        me.currentView && await me.currentView.onExit();
-        me.currentView = view;
-        await me.currentView.onEnter(prm);
-        me.emit("pageChange", prm);
-        return prm;
+        me.emit("pageChange", me.payload);
+        return me.payload;
     };//}}}
     async go(url) {//{{{
         const me = this;

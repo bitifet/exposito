@@ -33,6 +33,7 @@ body {// {{{
     &>* {
         min-width: var(--header-height);
     }
+    user-select: none;
 
 
     background: #444444;

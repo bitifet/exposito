@@ -23,13 +23,9 @@ export default new Promise(async function(resolve, reject) {
         , layout.menu
         , menuButton
         , {
-            eventsTarget: mainRouter,
+            router: mainRouter,
         }
     );
-
-    // Attach mainMenu links to mainRouter:
-    mainRouter.attach(mainMenu);
-
 
     // console.log({
     //     mainMenu,
