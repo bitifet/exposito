@@ -39,6 +39,16 @@ body {// {{{
     background: #444444;
     color: white;
 
+    #mainLogo {
+        width: var(--header-height);
+        padding: calc(var(--header-height) * 0.1;
+
+        img {
+            width: calc(var(--header-height) * 0.8;
+            height: calc(var(--header-height) * 0.8;
+        }
+    }
+
     h1, h2 {
         margin: 0px;
         padding: calc( var(--header-height) * 10 / 100);

@@ -3,6 +3,7 @@
 
 module.exports = Promise.resolve().then(async function() {
 
+    require('./home.scss');
     const view_base = require('@client/Interfaces/view.interface.js');
     const mainTpl = require('./home.pug');
     const {cachedGetJson} = require('@lib/net');
