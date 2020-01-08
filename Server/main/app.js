@@ -2,6 +2,7 @@
 // ==================
 const createError = require('http-errors');
 const express = require('express');
+const compression = require('./compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -9,6 +10,7 @@ const logger = require('morgan');
 const indexRouter = require('@server/routes/index');
 
 const app = express();
+app.use(compression);
 
 const basePath = path.dirname(
     path.dirname(process.argv[1]) // Server/main
