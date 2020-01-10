@@ -1,5 +1,5 @@
 const Path = require("path");
-const {name, cfgFile} = require("@models/app.js");
+const {name, cfgFile, cfgPath} = require("@models/app.js");
 module.exports = (
 /* @@yaml@@ */
 `# ${name.toUpperCase()} configuration file
@@ -16,6 +16,12 @@ module.exports = (
       http: 1080
       # https: 1443
       # h2: 1443
+    # files:
+    #     privateKey: ${cfgPath}/ssl/private.key
+    #     certificate: ${cfgPath}/ssl/public.cert
+    #     # HINT: You will need to get a valid SSL certificate files.
+    #     #   Meanwhile you can create a self-signed pair using following command:
+    #     #   openssl req -nodes -new -x509 -keyout private.key -out public.cert
   db:
     exposito:
       type: "postgresql"

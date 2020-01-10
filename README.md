@@ -14,6 +14,7 @@ Webpack powered Express project boilerplate.
 <!-- vim-markdown-toc GitLab -->
 
 * [Setup](#setup)
+    * [Enable SSL](#enable-ssl)
 * [Goals](#goals)
     * [History API based routing](#history-api-based-routing)
     * [Clever, plain and manageable project structure](#clever-plain-and-manageable-project-structure)
@@ -68,8 +69,26 @@ Check:
 sudo mkdir -p /etc/<brand>/<name>
 npm start config-file-template | sudo tee /etc/<brand>/<name>/<name>.yaml
 ```
-
 ...where ``<brand>`` and ``<name>`` are those you've chosen in previous step.
+
+This will create a full configuration file with some default values.
+
+Edit it and adjust as you need.
+
+> 📌 **Handling configuration tip**
+> 
+> At the top of that file you will find the *useDefaults* set to `false`.
+> 
+> I recommend you to switch it to `true` and comment out all sections that you
+> don't need to change.
+> 
+> Previous `npm start config-file-template` command uses
+> *Server/etc/config.sample.js* to generate its output.
+> 
+> As project grows and you need to add more configuration options/sections, best
+> practice is to add its default values to that file so all instances of your
+> project having *useDefaults* set to `true`, will automatically load that
+> default values unless explicitly overridden.
 
 
 5. Start playing...
@@ -84,6 +103,32 @@ And open ``http://localhost:1080`` in your preferred browser.
 > section.
 >
 > You can also modify your project default en `models/www.js`.
+
+
+### Enable SSL
+
+In order to enable SSL (https protocol) you will need a valid SSL certificate.
+
+Meanwhile you can create a self-signed one with the following command.
+
+    openssl req -nodes -new -x509 -keyout private.key -out public.cert
+
+Next, edit your configuration file and uncomment the `www -> files` section.
+
+> 📌 In case of not having one, run `npm start config-file-template` and copy
+> it from its output.
+
+You can change paths if you prefer. Either case you will net to place required
+files in order to SSL work.
+
+Finally, in the section `www -> protocols`, uncomment the row corresponding to
+'h2' (or 'http2': both are synonyms) protocol to enable it.
+
+> 📌 Only in case you really need it, enable 'https' instead: http2 works
+> always over ssl and is supposed to be backward compatible with https for all
+> browsers not supporting it.
+
+You will need to restart the server after those changes.
 
 
 Goals

@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 
+const Fs = require('fs');
 const {name} = require('@models/app');
 const model = require('@models/www');
 const app = require('./app');
@@ -42,9 +43,11 @@ const servers = Object.keys(model.protocols).map(function(protocol){
         };
         var args = [app];
         if (protocol != 'http') {
+            const {privateKey, certificate} = model.files || {};
+            if (! privateKey || ! certificate) throw "SSL Key or Cert file not specified";
             args.unshift({
-                key: model.files.privateKey,
-                cert: model.files.certificate,
+                key: String(Fs.readFileSync(privateKey, 'utf8')),
+                cert: String(Fs.readFileSync(certificate, 'utf8')),
             });
         };
 
@@ -59,8 +62,7 @@ const servers = Object.keys(model.protocols).map(function(protocol){
         }
 
     } catch (err) {
-        console.error("Unsuported protocol: " + protocol);
-        process.exit(1);
+        onError(err);
     };
 });
 
