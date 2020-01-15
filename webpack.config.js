@@ -3,28 +3,12 @@
 "use strict";
 const fs = require('fs');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
+const plugins = require('./webpack/plugins');
+const shims = require('./webpack/shims');
+const htmlOptions = require('./webpack/htmlOptions');
+const paths = require('./webpack/paths');
+const rules = require('./webpack/rules');
 
-const appModel = require('./models/app.js');
-const htmlOptions = {
-    title: appModel.name,
-    template: 'Client/layout/layout.pug',
-    appModel,
-};
-
-const shims = (function(shimPath) {//{{{
-    try {
-        return fs.readdirSync(shimPath)
-            .filter(f=>f.match(/\.js$/))
-            .map(f=>shimPath+'/'+f)
-        ;
-    } catch (err) {
-        return [];
-    };
-})('./Shims');//}}}
 
 // TODO:
 // =====
@@ -38,17 +22,9 @@ const devtool = (
     mode == "production" ? "source-map"
     : "inline-source-map"
 );
-
 const resolve = {
     mainFiles: ['index', 'index.view'],
-    alias: {
-        '@models': path.resolve(__dirname, 'models'),
-        '@client': path.resolve(__dirname, 'Client'),
-        '@server': path.resolve(__dirname, 'Server'),
-        '@assets': path.resolve(__dirname, 'Client/Assets'),
-        '@views': path.resolve(__dirname, 'Client/Views'),
-        '@lib': path.resolve(__dirname, 'lib'),
-    },
+    alias: paths.aliases,
 };
 
 const serverConfig = {//{{{
@@ -62,23 +38,16 @@ const serverConfig = {//{{{
   mode,
   resolve,
   plugins: [
-    new CleanWebpackPlugin(),
+    new plugins.CleanWebpackPlugin(),
   ],
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "dist/Server"),
+    path: paths.dists.server,
   },
   module: {
-    rules: [
-      {
-        test: /\.view\.js$/,
-        use: [
-          "null-loader",
-        ],
-      },
-    ],
+      rules: rules.server,
   },
-  externals: [nodeExternals()],
+  externals: [plugins.nodeExternals()],
 };//}}}
 
 const clientConfig = {//{{{
@@ -94,46 +63,20 @@ const clientConfig = {//{{{
   mode,
   resolve,
   plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(htmlOptions),
-    new HtmlWebpackPugPlugin({
+    new plugins.CleanWebpackPlugin(),
+    new plugins.HtmlWebpackPlugin(htmlOptions),
+    new plugins.HtmlWebpackPugPlugin({
       adjustIndent: true,
       pretty: true,
     }),
   ],
   output: {
     filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist/Client"),
+    path: paths.dists.client,
     publicPath: "/",
   },
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'babel-loader' }
-      },
-      {
-        test: /\.s?css$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
-        ],
-      },
-      {
-        test: /\.pug$/,
-        use: [
-          "pug-loader",
-        ],
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          "file-loader",
-        ],
-      },
-    ],
+      rules: rules.client,
   },
   optimization: {
     moduleIds: 'hashed',
