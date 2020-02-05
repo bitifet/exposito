@@ -23,8 +23,8 @@ Webpack powered Express project boilerplate.
     * [SRP](#srp)
     * [DRY](#dry)
 * [Technology](#technology)
+    * [Fully or partially integrated](#fully-or-partially-integrated)
     * [Not yet incorporated](#not-yet-incorporated)
-* [TODO](#todo)
 * [Bibliograpy](#bibliograpy)
 * [Contributing](#contributing)
 
@@ -33,9 +33,9 @@ Webpack powered Express project boilerplate.
 
 **Other documents:**
 
-|                              |                                |
-|------------------------------|--------------------------------|
-| [Making Of](Doc/MakingOf.md) | [Dev Manual](Doc/DevManual.md) |
+|                              |                                |                           |
+|------------------------------|--------------------------------|---------------------------|
+| [Making Of](Doc/MakingOf.md) | [Dev Manual](Doc/DevManual.md) | [TO-DO list](Doc/TODO.md) |
 
 
 Setup
@@ -239,46 +239,34 @@ side even required from ``Client/routes.js`` file.
 Technology
 ----------
 
+### Fully or partially integrated
+
   * Webpack
   * Express
   * Pug
   * HTML5
-    - History API
+  * SPA (Single Page Application)
+    - Random entry poing (external links work to everywhere).
+    - History API and link enhancement (internal local links doesn't reload the
+      pagepage).
   * SaSS
   * Babel
+  * HTTP / HTTPS / HTTP2
+    - Default HTTP2 (SSL)
+    - Recommendation: Use [RedBird inverse
+      proxy](https://stackoverflow.com/a/59734623/4243912) to redirect http to
+      https (http2) and get free certificates automatically from
+      [LetsEncrypt](https://letsencrypt.org/).
 
 ### Not yet incorporated
 
-  * GraphQL
+  * WebSocket
+  * GraphQL (with subscriptions over WebSocket)
   * [SQLTT](https://www.npmjs.com/package/sqltt)
-  * PWA
+  * [PWA](https://en.wikipedia.org/wiki/Progressive_web_application)
+  * [Bunyan logs](https://github.com/trentm/node-bunyan)
 
-
-
-TODO
-----
-
-  * Implement PWA module.
-
-  * Implement access contrrol boilerplate.
-    - Consider special user access levels 'admin' and 'developer'.
-
-  * Block access to .map files in access control middleware to non
-    developer-level users.
-
-  * Make models dynamic:
-
-    - Allow to include configuration data (that must be read at execution
-      -not building- time).
-
-    - Consider allowing dynamic reload too.
-      + For example detecting if a module returns a function and executing
-        it each time.
-
-    - Consider making them async in order to allow:
-      + Database queries.
-      + External APIs request.
-      + ...or even configuration file change watching.
+> 📌 See also [TO-DO list](Doc/TODO.md)
 
 
 Bibliograpy
